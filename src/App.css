@@ -1,38 +1,71 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin-top: 10px;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap");
+* {
+  /* box-sizing: border-box; */
+  font-family: "Nunito", sans-serif;
+  /* margin: 0 auto;
+  padding: 0; */
+}
+.btn-primary {
+  background-color: #0a3e66 !important;
+  border-color: #0a3e66;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.btn-outline-primary {
+  border-color: #0a3e66;
+}
+.btn-outline-primary:hover {
+  border-color: #0a3e66;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn-outline-primary:hover {
+  border-color: #0a3e66;
+  background-color: #0a3e66;
+  color: white !important;
+}
+.page-wrapper {
+  background-color: #f2f5fe;
+  height: 100vh;
+  overflow-x: hidden;
+}
+.content {
+  background-color: none;
+}
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #c8d1ee #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  height: 14px;
+  width: 14px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #c8d1ee;
+  border-radius: 10px;
+  border: 2px solid #ffffff;
+}
+
+.txt-sub {
+  font-weight: 700;
+  color: #2c465a;
+  font-size: 18px;
 }

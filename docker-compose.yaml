@@ -1,0 +1,128 @@
+version: "3.5"
+
+services:
+  momby_api_gateway:
+    container_name: momby_api_gateway
+    image: fajarsujai/momby_api_gateway:latest
+    ports:
+      - "3000:3000"
+    env_file:
+      - /home/fajarsujai/momby/momby-api-gateway/.env
+    command: sh -c 'npm run start'
+    volumes:
+      - "server:/data/backend/"
+      - /Users/Admin/Documents/Programming/momby/.env:/usr/src/app/.env
+      # - /home/fajarsujai/momby/momby-api-gateway/.env:/usr/src/app/.env
+    networks:
+      - network
+
+  momby_service_user:
+    container_name: momby_service_user
+    image: fajarsujai/momby_service_user:latest
+    ports:
+      - "3100:3000"
+    depends_on:
+      - momby-postgres-service-user
+    links:
+      - momby-postgres-service-user
+    env_file:
+      - /Users/Admin/Documents/Programming/momby/.env:/usr/src/app/.env
+      # - /home/fajarsujai/momby/momby-service-user/.env
+    command: sh -c 'npm run start'
+    volumes:
+      - "server:/data/backend/"
+      - /home/fajarsujai/momby/momby-service-service/.env:/usr/src/app/.env
+    networks:
+      - network
+
+  momby-postgres-service-user:
+    container_name: momby-postgres-service-user
+    image: postgres
+    environment:
+      POSTGRES_USER: developer
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: momby_service_user
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5100:5432"
+    networks:
+      - network
+    restart: unless-stopped
+
+  momby_service_service:
+    container_name: momby_service_service
+    image: fajarsujai/momby_service_service:latest
+    ports:
+      - "3200:3000"
+    env_file:
+      - /home/fajarsujai/momby/momby-service-service/.env
+    depends_on:
+      - momby-postgres-service-service
+    links:
+      - momby-postgres-service-service
+
+    command: sh -c 'npm run start'
+    volumes:
+      - "server:/data/backend/"
+      - /home/fajarsujai/momby/momby-service-service/.env:/usr/src/app/.env
+    networks:
+      - network
+
+  momby-postgres-service-service:
+    container_name: momby-postgres-service-service
+    image: postgres
+    environment:
+      POSTGRES_USER: developer
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: momby_service_service
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5200:5432"
+    networks:
+      - network
+    restart: unless-stopped
+
+  momby_service_therapist:
+    container_name: momby_service_therapist
+    image: fajarsujai/momby_service_therapist_laravel:latest
+    ports:
+      - "3300:8000"
+    env_file:
+      - /home/fajarsujai/momby/momby-service-therapist-laravel/.env
+    depends_on:
+      - momby-postgres-service-therapist
+    links:
+      - momby-postgres-service-therapist
+
+    command: sh -c 'php artisan serve'
+    volumes:
+      - "server:/data/backend/"
+      - /home/fajarsujai/momby/momby-service-therapist-laravel/.env:/app/.env
+    networks:
+      - network
+
+  momby-postgres-service-therapist:
+    container_name: momby-postgres-service-therapist
+    image: postgres
+    environment:
+      POSTGRES_USER: developer
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: momby_service_therapist
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5300:5432"
+    networks:
+      - network
+    restart: unless-stopped
+
+networks:
+  network:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
+  server:
