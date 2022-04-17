@@ -10,18 +10,21 @@ import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/loginPage";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./config/redux/store";
 
 function App() {
   return (
-    <Router>
+    <>
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+        <Router>
       <Routes>
-        <Route exact path="/login" element={<Login />} />
-        {/* <Topbar /> */}
-        {/* <div className="container"> */}
-
+        <Route exact path="/" element={<Login />} />
         <Route
           exact
-          path="/"
+          path="/dashboard"
           element={
             <>
               <Topbar />
@@ -35,7 +38,10 @@ function App() {
           path="/users"
           element={
             <>
-              <Topbar /> <Sidebar /> <UserList />
+              <Topbar />
+              <div className="container">
+                <Sidebar /> <UserList />
+              </div>
             </>
           }
         />
@@ -43,7 +49,10 @@ function App() {
           path="/user/:userId"
           element={
             <>
-              <Topbar /> <Sidebar /> <User />
+              <Topbar />
+              <div className="container">
+                <Sidebar /> <User />
+              </div>
             </>
           }
         />
@@ -51,8 +60,10 @@ function App() {
           path="/newUser"
           element={
             <>
-              <Topbar /> <Sidebar />
-              <NewUser />
+              <Topbar /> 
+              <div className="container">
+                <Sidebar /> <NewUser />
+              </div>    
             </>
           }
         />
@@ -60,8 +71,11 @@ function App() {
           path="/products"
           element={
             <>
-              <Topbar /> <Sidebar />
-              <ProductList />
+              <Topbar /> 
+              <div className="container">
+                <Sidebar /> <ProductList />
+              </div>
+              
             </>
           }
         />
@@ -69,8 +83,11 @@ function App() {
           path="/product/:productId"
           element={
             <>
-              <Topbar /> <Sidebar />
-              <Product />
+              <Topbar /> 
+              <div className="container">
+                <Sidebar /> <Product />
+              </div>
+              
             </>
           }
         />
@@ -79,14 +96,19 @@ function App() {
           element={
             <>
               <Topbar />
-              <Sidebar />
-              <NewProduct />
+              <div className="container">
+                <Sidebar /> <NewProduct />
+              </div>
             </>
           }
         />
         {/* </div> */}
       </Routes>
     </Router>
+        </PersistGate>
+      </Provider>
+    </>
+    
   );
 }
 
